@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Box, TextField, Typography, Button, Paper, Stack } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
+import { addCustomer, UpdateCustomer } from '../../App/Slice/CustomerSlice';
+import { delay } from '../Common/delay';
 
-export default function CustomerForm({ customer,handleClose }) {
+export default function CustomerForm({ customer,handleClose,onSuccess }) {
   const [customerData, setCustomerData] = useState({
+    _id:'',
     name: '',
     Address: '',
     city: '',
@@ -19,8 +22,9 @@ export default function CustomerForm({ customer,handleClose }) {
 
   useEffect(() => {
    if (customer) {
-     const { name, Address, city, state, zipCode, ContactPerson, ContactNumber } = customer;
+     const { name, Address, city, state, zipCode, ContactPerson, ContactNumber ,_id } = customer;
      setCustomerData({
+       _id,
        name,
        Address,
        city,
@@ -63,10 +67,7 @@ export default function CustomerForm({ customer,handleClose }) {
       isValid=false;
       errors.ContactNumber="Contact Number is required"
     }
-    if(typeof(customerData.zipCode)!=Number){
-      isValid=false;
-      errors.zipCode="Zip Code should be a number"
-    }
+   
 
     setErrors(errors)
     return isValid ;
@@ -99,14 +100,38 @@ export default function CustomerForm({ customer,handleClose }) {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit =async(e) => {
     e.preventDefault();
     if(Validation()){
       try{ 
          if(customer){
            // update customer 
+
+           await dispatch(UpdateCustomer(customerData)).unwrap();
+           toast.success('Updated Succesflly',{
+              position: 'top-center',
+              autoClose: 5000,
+              onClose: () => handleClose(),
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+            })
+            await delay(1000);
+            handleClose()
+            // if (onSuccess) onSuccess();
          }else{
             // add customer
+            await dispatch(addCustomer(customerData)).unwrap();
+             toast.success('Added Succesflly',{
+              position: 'top-center',
+              autoClose: 5000,
+              onClose: () => handleClose(),
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+            })
+            await delay(1000);
+            // close the form after successful submission
          }
       }catch(error){
         toast(`${error.error}`,{
@@ -117,10 +142,18 @@ export default function CustomerForm({ customer,handleClose }) {
            pauseOnHover: true,
            draggable: true,
         })
+        await delay(1000);
+      }finally{
+        handleClose()
+        await delay(800)
+       
+        if (onSuccess) onSuccess();
+
       }
     }
    
   };
+
   console.log(customer)
   return (
     <Paper elevation={3} sx={{
@@ -226,3 +259,4 @@ export default function CustomerForm({ customer,handleClose }) {
     </Paper>
   );
 }
+

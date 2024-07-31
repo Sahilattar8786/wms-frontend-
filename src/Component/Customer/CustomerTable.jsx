@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TablePagination, Paper,Button,Stack } from '@mui/material';
 
-function CustomerTable({ CustomerData, page, rowsPerPage, handleEdit ,handleChangePage,handleChangeRowsPerPage }) {
+function CustomerTable({ CustomerData, page, rowsPerPage, handleEdit ,handleChangePage,handleChangeRowsPerPage,handleDelete }) {
   // Apply pagination
   const paginatedData = CustomerData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
@@ -9,7 +9,13 @@ function CustomerTable({ CustomerData, page, rowsPerPage, handleEdit ,handleChan
     <Paper sx={{ width: '100%', mb: 2 }}>
       <TableContainer>
         <Table>
-          <TableHead>
+          <TableHead sx={{
+            backgroundColor: '#1976d2',
+            color: 'white',
+            '& th': {
+              fontWeight: 'bold',
+            },
+          }}>
             <TableRow>
               <TableCell>Name</TableCell>
               <TableCell>Address</TableCell>
@@ -22,36 +28,54 @@ function CustomerTable({ CustomerData, page, rowsPerPage, handleEdit ,handleChan
             </TableRow>
           </TableHead>
           <TableBody>
-            {paginatedData.map((row) => (
-              <TableRow key={row.contactNumber}>
-                <TableCell>{row.name}</TableCell>
-                <TableCell>{row.Address}</TableCell>
-                <TableCell>{row.city}</TableCell>
-                <TableCell>{row.state}</TableCell>
-                <TableCell>{row.zipCode}</TableCell>
-                <TableCell>{row.ContactPerson}</TableCell>
-                <TableCell>{row.ContactNumber}</TableCell>
-                <TableCell>
-                  <Stack
-                    direction={{ md: 'row', sm: 'column' }}
-                    spacing={1}
-                    justifyContent="start"
-                    alignItems="center"
-
-                  >
-                     <Button variant='contained' onClick={() => handleEdit(row)} sx={{
-                         m:1,
-                        '&:hover': {
-                          backgroundColor: '#0094B4',
-                          color: 'white'
-                        }
-                     }}>Edit</Button>
-                     <Button variant='contained' color='error'>Delete</Button>
-                  </Stack>  
-                 
-                </TableCell>
-              </TableRow>
-            ))}
+          {paginatedData.length > 0 ? (
+        paginatedData.map((row) => (
+          <TableRow key={row.contactNumber}>
+            <TableCell>{row.name}</TableCell>
+            <TableCell>{row.Address}</TableCell>
+            <TableCell>{row.city}</TableCell>
+            <TableCell>{row.state}</TableCell>
+            <TableCell>{row.zipCode}</TableCell>
+            <TableCell>{row.ContactPerson}</TableCell>
+            <TableCell>{row.ContactNumber}</TableCell>
+            <TableCell>
+              <Stack
+                direction={{ md: 'row', sm: 'column' }}
+                spacing={1}
+                justifyContent="start"
+                alignItems="center"
+              >
+                <Button
+                  variant='contained'
+                  onClick={() => handleEdit(row)}
+                  sx={{
+                    m: 1,
+                    '&:hover': {
+                      backgroundColor: '#0094B4',
+                      color: 'white',
+                    },
+                  }}
+                >
+                  Edit
+                </Button>
+                <Button
+                  variant='contained'
+                  color='error'
+                  onClick={() => handleDelete(row._id)}
+                >
+                  Delete
+                </Button>
+              </Stack>
+            </TableCell>
+          </TableRow>
+        ))
+      ) : (
+        <TableRow>
+          <TableCell colSpan={8} align="center">
+            No data available
+          </TableCell>
+        </TableRow>
+      )}
           </TableBody>
         </Table>
       </TableContainer>

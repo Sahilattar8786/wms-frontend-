@@ -6,12 +6,16 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import {store} from './App/store';
 import 'react-toastify/dist/ReactToastify.css';
+import ErrorBoundary from './Config/ErrorBoundary';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Provider store={store} >
-    <App/>
-  </Provider>
+  <ErrorBoundary>
+    <Provider store={store} >
+      <App/>
+    </Provider>
+  </ErrorBoundary>
+ 
 );
 
 // If you want to start measuring performance in your app, pass a function
