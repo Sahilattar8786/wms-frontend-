@@ -24,6 +24,7 @@ function CustomerTable({ CustomerData, page, rowsPerPage, handleEdit ,handleChan
               <TableCell>Zip Code</TableCell>
               <TableCell>Contact Person</TableCell>
               <TableCell>Contact Number</TableCell>
+              <TableCell>Credit Amount</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -38,6 +39,7 @@ function CustomerTable({ CustomerData, page, rowsPerPage, handleEdit ,handleChan
             <TableCell>{row.zipCode}</TableCell>
             <TableCell>{row.ContactPerson}</TableCell>
             <TableCell>{row.ContactNumber}</TableCell>
+            <TableCell>₹{row.creditAmount}</TableCell>
             <TableCell>
               <Stack
                 direction={{ md: 'row', sm: 'column' }}

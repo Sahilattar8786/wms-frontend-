@@ -116,12 +116,13 @@ export default function CustomerForm({ customer,handleClose,onSuccess }) {
               pauseOnHover: true,
               draggable: true,
             })
-            await delay(1000);
-            handleClose()
+          
+            
             // if (onSuccess) onSuccess();
          }else{
             // add customer
             await dispatch(addCustomer(customerData)).unwrap();
+
              toast.success('Added Succesflly',{
               position: 'top-center',
               autoClose: 5000,
@@ -130,7 +131,7 @@ export default function CustomerForm({ customer,handleClose,onSuccess }) {
               pauseOnHover: true,
               draggable: true,
             })
-            await delay(1000);
+            
             // close the form after successful submission
          }
       }catch(error){
@@ -144,10 +145,13 @@ export default function CustomerForm({ customer,handleClose,onSuccess }) {
         })
         await delay(1000);
       }finally{
-        handleClose()
-        await delay(800)
+     
+        await delay(3000)
        
-        if (onSuccess) onSuccess();
+        if (onSuccess){
+           onSuccess()
+           handleClose()
+        } 
 
       }
     }
@@ -250,7 +254,7 @@ export default function CustomerForm({ customer,handleClose,onSuccess }) {
          <Button variant="contained" color="primary" type="submit" sx={{ alignSelf: 'flex-start' }}>
           {customer ? 'Update' : 'Add'}
         </Button>
-        <Button variant="contained" color="error" type="submit" sx={{ alignSelf: 'flex-start' }} onClick={handleClose}>
+        <Button variant="contained" color="error"  sx={{ alignSelf: 'flex-start' }} onClick={handleClose}>
           Cancel 
         </Button>
          </Stack>

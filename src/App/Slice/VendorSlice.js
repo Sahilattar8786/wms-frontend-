@@ -36,7 +36,7 @@ export const UpdateVendor=createAsyncThunk(
             const config={
                 'Content-Type': 'application/json',
             }
-            const response= await api.put('/vendor',data,config);
+            const response= await api.put(`/vendor/${data._id}`,data,config);
             return response.data;
         }
         catch(error){
@@ -94,13 +94,12 @@ const VendorSlice=createSlice({
             state.error=action.error;
         })
         // Add vendor reducer here
-        .addCase(AddVendor.pending,(state,action)=>[
-            state.loading=true,
-            state.error=null
-        ])
+        .addCase(AddVendor.pending,(state)=>{
+            state.loading=true
+        })
         .addCase(AddVendor.fulfilled,(state,action)=>{
             state.loading=false;
-            state.data=action.payload.vendor || action.payload
+            state.data=action.payload.vendor || action.payload 
             state.error=null;  // Reset error if request is successful
         })
         .addCase(AddVendor.rejected,(state,action)=>{
