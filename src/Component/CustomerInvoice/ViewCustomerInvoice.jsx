@@ -3,10 +3,10 @@ import { Container, Typography, Table, TableBody, TableCell, TableContainer, Tab
 import { format } from 'date-fns';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-
 import api from '../../API/api';
+import Loader from '../Common/Loader';
 
-const ViewVendorInvoice = ({ id, handleClose }) => {
+const ViewCustomerInvoice = ({ id, handleClose }) => {
   const formatDate = (date) => {
     if (!date) return 'Invalid Date';
     try {
@@ -29,7 +29,7 @@ const ViewVendorInvoice = ({ id, handleClose }) => {
     const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
     pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-    pdf.save(`${invoice.vendorId?.name || 'Invoice'}${formatDate(invoice.InvoiceDate)}.pdf`);
+    pdf.save(`${invoice.customerId?.name || 'Invoice'}${formatDate(invoice.InvoiceDate)}.pdf`);
 
     const pdfBlob = pdf.output('blob');
     const pdfUrl = URL.createObjectURL(pdfBlob);
@@ -44,7 +44,7 @@ const ViewVendorInvoice = ({ id, handleClose }) => {
   useEffect(() => {
     const fetchInvoice = async () => {
       try {
-        const response = await api.get(`/vendorInvoice/${id}`);
+        const response = await api.get(`customerInvoice//${id}`);
         setInvoice(response.data.invoice);
       } catch (error) {
         console.error("Error fetching invoice:", error);
@@ -55,7 +55,7 @@ const ViewVendorInvoice = ({ id, handleClose }) => {
   }, [id]);
 
   if (!invoice || !invoice.products) {
-    return <Typography>Loading...</Typography>;
+    return <Loader/>;
   }
 
   return (
@@ -77,8 +77,8 @@ const ViewVendorInvoice = ({ id, handleClose }) => {
           </Typography>
           <Grid container spacing={2} m={1}>
             <Grid item xs={6}>
-              <Typography variant="h6">Vendor:</Typography>
-              <Typography>{invoice.vendorId?.name}</Typography>
+              <Typography variant="h6">Customer:</Typography>
+              <Typography>{invoice.customerId?.name}</Typography>
             </Grid>
             <Grid item xs={6}>
               <Typography variant="h6">Invoice Date:</Typography>
@@ -148,4 +148,4 @@ const ViewVendorInvoice = ({ id, handleClose }) => {
   );
 };
 
-export default ViewVendorInvoice;
+export default ViewCustomerInvoice;

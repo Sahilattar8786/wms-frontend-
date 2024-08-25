@@ -56,45 +56,7 @@ export default function VendorInvoice() {
   if (error) {
     return <Typography>{error.message}</Typography>;
   }
-  const invoiceData = {
-    _id: '66b080480bcbce59f0cc216a',
-    vendorId: {
-      _id: '66aa3dcc0c01e44ca3511fad',
-      name: 'M/s Sahil Attar'
-    },
-    totalAmount: 4500,
-    paymentDate: '2024-08-05T10:00:00.000Z',
-    paymentType: 'Credit',
-    status: 'Paid',
-    products: [
-      {
-        productId: {
-          _id: '66ac9ecd280b4cdd86980ba9',
-          name: 'Brinjal White / Pandhari Wangi'
-        },
-        qty: 5,
-        rate: 150,
-        total: 750
-      },
-      {
-        productId: null,
-        qty: 10,
-        rate: 100,
-        total: 1000
-      },
-      {
-        productId: {
-          _id: '66ac9edf280b4cdd86980bac',
-          name: 'Cucumber /Pandhari Kakadi'
-        },
-        qty: 8,
-        rate: 200,
-        total: 1600
-      }
-    ],
-    __v: 0,
-    InvoiceDate: '2024-08-06T16:37:38.915Z'
-  };
+ 
   return (
     <Box
       display="flex"

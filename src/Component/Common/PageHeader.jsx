@@ -1,6 +1,7 @@
 import React from 'react'
-import { Grid,Button,Typography } from '@mui/material'
+import { Grid,Button} from '@mui/material'
 import ResponsiveTypography from './ResponsiveTypography'
+import AddIcon from '@mui/icons-material/Add';
 export default function PageHeader({titleText,ButtonText,func}) {
   return (
     <Grid container spacing={2} sx={{ mb: 2}}>
@@ -8,7 +9,7 @@ export default function PageHeader({titleText,ButtonText,func}) {
         <ResponsiveTypography titleText={titleText}/>
     </Grid>
     <Grid item xs={4} md={8} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <Button variant="contained" color="primary" onClick={func}>{ButtonText}</Button>
+        <Button variant="contained" color="primary" onClick={func} startIcon={<AddIcon/>}>{ButtonText}</Button>
     </Grid>
     </Grid>
   )
