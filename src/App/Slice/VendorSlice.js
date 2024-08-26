@@ -4,7 +4,13 @@ export const fetchVendor=createAsyncThunk(
     'vendor/fetch',
     async (_, { rejectWithValue }) => {
        try{
-         const response = await api.get('/vendor')
+        const config={
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer '+localStorage.getItem('token')
+            },
+          }
+         const response = await api.get('/vendor',config)
          return response.data;
        }catch(error){
          rejectWithValue(error.error)
@@ -17,10 +23,11 @@ export const AddVendor=createAsyncThunk(
     'vendor/add', async(data,{rejectWithValue})=>{
         try{
             const config={
-              headers: {
+                headers: {
                   'Content-Type': 'application/json',
-              },
-            }
+                  'Authorization': 'Bearer '+localStorage.getItem('token')
+                },
+              }
             const response= await api.post('/vendor',data,config);
             return response.data;
         }catch(error){
@@ -34,8 +41,11 @@ export const UpdateVendor=createAsyncThunk(
     'vendor/update',async(data,{rejectWithValue})=>{
         try{
             const config={
-                'Content-Type': 'application/json',
-            }
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer '+localStorage.getItem('token')
+                },
+              }
             const response= await api.put(`/vendor/${data._id}`,data,config);
             return response.data;
         }
@@ -51,9 +61,10 @@ export const DeleteVendor=createAsyncThunk(
         try{
             const config={
                 headers: {
-                    'Content-Type': 'application/json',
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer '+localStorage.getItem('token')
                 },
-            }
+              }
             const response= await api.delete(`/vendor/${id}`,config);
             return response.data;
         }catch(error){

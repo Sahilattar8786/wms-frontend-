@@ -72,8 +72,9 @@ export default function CustomerInvoice() {
       <Dialog open={open} handleClose={handleClose}>
          <ViewCustomerInvoice id={viewId}  handleClose={handleClose} />
       </Dialog>
-
-
+      
+      {/* Delete Invoice */}
+    
     </Box>
   )
 }

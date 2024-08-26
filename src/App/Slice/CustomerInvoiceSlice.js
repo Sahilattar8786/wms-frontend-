@@ -8,6 +8,7 @@ export const createCustomerInvoice=createAsyncThunk(
           const config={
             headers: {
               'Content-Type': 'application/json',
+              'Authorization': 'Bearer '+localStorage.getItem('token')
             },
           }
           const response= await api.post('/customerInvoice',{customerId,totalAmount,paymentType,status,products,InvoiceDate},config);
@@ -24,8 +25,14 @@ export const createCustomerInvoice=createAsyncThunk(
 export const getCustomerInvoices=createAsyncThunk(
     'customerInvoice/get',
     async (_, { rejectWithValue }) => {
+       const config={
+         headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer '+localStorage.getItem('token')
+            },
+          }
        try{
-         const response = await api.get(`/customerInvoice`)
+         const response = await api.get(`/customerInvoice`,config)
          return response.data;
        }catch(error){
          rejectWithValue(error.error)
@@ -41,6 +48,7 @@ export const deleteInvoice=createAsyncThunk(
          const config={
             headers: {
               'Content-Type': 'application/json',
+              'Authorization': 'Bearer '+localStorage.getItem('token')
             },
           }
           const response= await api.delete(`/customerInvoice/${id}`,config)

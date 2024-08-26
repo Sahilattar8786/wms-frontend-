@@ -20,7 +20,7 @@ export default function ConfirmDelete({ open, handleClose, handleConfirm }) {
           }}
         >
           <Typography variant="body1" gutterBottom>
-            Are you sure you want to delete ?
+            Are you sure you want to delete ? 
           </Typography>
           <Box 
             sx={{ 

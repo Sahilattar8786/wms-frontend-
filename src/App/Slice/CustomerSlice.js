@@ -1,12 +1,17 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "../../API/api";
-import axios from "axios";
-import { Update } from "@mui/icons-material";
+
 export const fetchCustomer=createAsyncThunk(
     'customer/fetch',
     async (_, { rejectWithValue }) => {
        try{
-         const response = await api.get('/customer')
+        const config={
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+localStorage.getItem('token')
+          },
+        }
+         const response = await api.get('/customer',config)
          return response.data;
        }catch(error){
          rejectWithValue(error.error)
@@ -20,6 +25,7 @@ export const addCustomer=createAsyncThunk(
       const config={
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer '+localStorage.getItem('token')
         },
       }
     console.log(data)
@@ -37,6 +43,7 @@ export const addCustomer=createAsyncThunk(
       const config={
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer '+localStorage.getItem('token')
         },
       }
       console.log(data)
@@ -55,6 +62,7 @@ export const addCustomer=createAsyncThunk(
       const config={
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer '+localStorage.getItem('token')
         },
       }
       const response= await api.delete(`/customer/${id}`,config);

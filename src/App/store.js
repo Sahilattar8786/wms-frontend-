@@ -4,6 +4,8 @@ import VendorSlice from "./Slice/VendorSlice";
 import ProductSlice from "./Slice/ProductSlice";
 import VendorInvoiceSlice from "./Slice/VendorInvoiceSlice";
 import CustomerInvoiceSlice from "./Slice/CustomerInvoiceSlice";
+import PaymentSlice from "./Slice/PaymentSlice";
+import userSlice from "./Slice/userSlice";
 
 
 
@@ -16,7 +18,10 @@ export const store=configureStore(
             Vendor:VendorSlice,
             Product:ProductSlice,
             VendorInvoice:VendorInvoiceSlice,
-            CustomerInvoice:CustomerInvoiceSlice
+            CustomerInvoice:CustomerInvoiceSlice,
+            Payment:PaymentSlice,
+            User:userSlice
+
         },
       
     }

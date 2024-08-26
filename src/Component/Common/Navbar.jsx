@@ -12,19 +12,20 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import CorporateFareIcon from '@mui/icons-material/CorporateFare';
-
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 const pages = [
-    { name: "Bill", path: 'movie' },
-    { name: 'Invoice', path: 'show' },
-    { name: 'Payment', path: 'theater' },
-    {name:'Customer',path:'customer'},
+    { name: "Customer Invoice", path: '/customerInvoice' },
+    { name: 'Vendor Invoice', path: '/vendorInvoice' },
+    { name: 'Payment', path: '/payment' },
+    {name:'Customer',path:'/customer'},
     {
         name:'Vendor',
-        path:'Vendor'
+        path:'/vendor'
     },
     {
       name:'Product',
-      path:'Product'
+      path:'/product'
     }
   ];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -32,7 +33,8 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 function Navbar() {
   const [anchorElNav, setAnchorElNav] =   React.useState()
   const [anchorElUser, setAnchorElUser] = React.useState()
-
+  const navigate=useNavigate();
+  const userInfo=useSelector((state)=>state.User.user)
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -100,7 +102,7 @@ function Navbar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                <MenuItem key={page.name} onClick={()=>navigate(`${page.path}`)}>
                   <Typography textAlign="center">{page.name}</Typography>
                 </MenuItem>
               ))}
@@ -128,7 +130,7 @@ function Navbar() {
             {pages.map((page) => (
               <Button
                 key={page.name}
-                onClick={handleCloseNavMenu}
+                onClick={()=>navigate(`${page.path}`)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page.name}
@@ -139,7 +141,7 @@ function Navbar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt={userInfo?.name} src={userInfo?.pic}/>
               </IconButton>
             </Tooltip>
             <Menu

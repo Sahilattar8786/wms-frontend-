@@ -5,7 +5,13 @@ export const fetchProduct=createAsyncThunk(
     'product/fetch',
     async (_, { rejectWithValue }) => {
        try{
-         const response = await api.get('/product')
+        const config={
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+localStorage.getItem('token')
+          },
+        }
+         const response = await api.get('/product',config)
          return response.data;
        }catch(error){
          rejectWithValue(error.error)
@@ -22,6 +28,7 @@ export const addProduct=createAsyncThunk(
           const config={
             headers: {
               'Content-Type': 'application/json',
+              'Authorization': 'Bearer '+localStorage.getItem('token')
             },
           }
           const response=await api.post('/product',data,config)
@@ -39,6 +46,7 @@ export const UpdateProduct=createAsyncThunk(
           const config={
             headers: {
               'Content-Type': 'application/json',
+              'Authorization': 'Bearer '+localStorage.getItem('token')
             },
           }
           const response=await api.put(`/product/${data._id}`,data,config)
@@ -57,6 +65,7 @@ export const DeleteProduct=createAsyncThunk(
           const config={
             headers: {
               'Content-Type': 'application/json',
+              'Authorization': 'Bearer '+localStorage.getItem('token')
             },
           }
           const response=await api.delete(`/product/${id}`,config)
